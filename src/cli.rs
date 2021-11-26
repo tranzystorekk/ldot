@@ -1,6 +1,18 @@
 use std::path::PathBuf;
 
-use clap::Parser;
+use clap::{IntoApp, Parser};
+use clap_generate::Shell;
+
+const PKG_NAME: &str = env!("CARGO_PKG_NAME");
+
+pub fn generate_completion(shell: Shell) {
+    clap_generate::generate(
+        shell,
+        &mut Cli::into_app(),
+        PKG_NAME,
+        &mut std::io::stdout(),
+    );
+}
 
 /// List hidden files and directories AKA "dotfiles"
 #[derive(Parser)]
@@ -29,6 +41,10 @@ pub struct Cli {
     /// Specify when to colorize the output
     #[clap(long, possible_values = ["always", "auto", "never"], default_value = "auto")]
     pub color: String,
+
+    /// Generate a shell completion script and exit
+    #[clap(long, value_name = "SHELL", possible_values = ["bash", "zsh", "fish", "powershell", "elvish"])]
+    pub completion: Option<Shell>,
 
     /// List contents inside the specified directory
     #[clap(value_name = "ROOT_DIR")]

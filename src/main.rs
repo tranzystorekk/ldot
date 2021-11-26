@@ -9,8 +9,15 @@ use clap::Parser;
 use glob::glob;
 use itertools::Itertools;
 
+use cli::generate_completion;
+
 fn main() -> anyhow::Result<()> {
     let cli = cli::Cli::parse();
+
+    if let Some(shell) = cli.completion {
+        generate_completion(shell);
+        return Ok(());
+    }
 
     let from_dir = cli.from_dir.as_deref().unwrap_or_else(|| Path::new("."));
     ensure!(from_dir.is_dir(), "Specified root path is not a directory");
