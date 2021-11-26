@@ -1,6 +1,7 @@
 mod cli;
 
 use std::os::unix::process::CommandExt;
+use std::path::Path;
 use std::process::Command;
 
 use anyhow::ensure;
@@ -11,7 +12,7 @@ use itertools::Itertools;
 fn main() -> anyhow::Result<()> {
     let cli = cli::Cli::parse();
 
-    let from_dir = cli.from_dir;
+    let from_dir = cli.from_dir.as_deref().unwrap_or_else(|| Path::new("."));
     ensure!(from_dir.is_dir(), "Specified root path is not a directory");
 
     let mut ls_cmd = Command::new("ls");
@@ -36,7 +37,10 @@ fn main() -> anyhow::Result<()> {
         ls_cmd.arg("-r");
     }
 
-    std::env::set_current_dir(from_dir)?;
+    if let Some(dir) = cli.from_dir {
+        std::env::set_current_dir(&dir)?;
+    }
+
     let dots: Vec<_> = glob(".[!.]*")?.try_collect()?;
 
     if dots.is_empty() {

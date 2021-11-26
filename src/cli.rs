@@ -27,6 +27,6 @@ pub struct Cli {
     pub human_readable: bool,
 
     /// List contents inside the specified directory
-    #[clap(value_name = "ROOT_DIR", default_value = ".")]
-    pub from_dir: PathBuf,
+    #[clap(value_name = "ROOT_DIR")]
+    pub from_dir: Option<PathBuf>,
 }
