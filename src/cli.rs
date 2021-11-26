@@ -26,6 +26,10 @@ pub struct Cli {
     #[clap(short, long)]
     pub human_readable: bool,
 
+    /// Specify when to colorize the output
+    #[clap(long, possible_values = ["always", "auto", "never"], default_value = "auto")]
+    pub color: String,
+
     /// List contents inside the specified directory
     #[clap(value_name = "ROOT_DIR")]
     pub from_dir: Option<PathBuf>,

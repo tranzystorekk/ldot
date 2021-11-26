@@ -47,7 +47,8 @@ fn main() -> anyhow::Result<()> {
         return Ok(());
     }
 
-    let error = ls_cmd.arg("--color=auto").arg("-d").args(dots).exec();
+    let color = format!("--color={}", cli.color);
+    let error = ls_cmd.arg(color).arg("-d").args(dots).exec();
 
     Err(error.into())
 }
