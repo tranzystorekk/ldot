@@ -1,12 +1,12 @@
 use std::path::PathBuf;
 
 use clap::{IntoApp, Parser};
-use clap_generate::Shell;
+use clap_complete::Shell;
 
 const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 
 pub fn generate_completion(shell: Shell) {
-    clap_generate::generate(
+    clap_complete::generate(
         shell,
         &mut Cli::into_app(),
         PKG_NAME,
@@ -43,7 +43,7 @@ pub struct Cli {
     pub color: String,
 
     /// Generate a shell completion script and exit
-    #[clap(long, value_name = "SHELL", possible_values = ["bash", "zsh", "fish", "powershell", "elvish"])]
+    #[clap(long, value_name = "SHELL", arg_enum)]
     pub completion: Option<Shell>,
 
     /// List contents inside the specified directory
