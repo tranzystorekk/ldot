@@ -6,12 +6,7 @@ use clap_complete::Shell;
 const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 
 pub fn generate_completion(shell: Shell) {
-    clap_complete::generate(
-        shell,
-        &mut Cli::command(),
-        PKG_NAME,
-        &mut std::io::stdout(),
-    );
+    clap_complete::generate(shell, &mut Cli::command(), PKG_NAME, &mut std::io::stdout());
 }
 
 /// List hidden files and directories AKA "dotfiles"
