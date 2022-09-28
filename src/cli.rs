@@ -30,7 +30,7 @@ pub struct Cli {
     pub reverse: bool,
 
     /// With -l, print human-readable file sizes, e.g. 10M
-    #[arg(short, long)]
+    #[arg(short = 'H', long)]
     pub human_readable: bool,
 
     /// Specify when to colorize the output
