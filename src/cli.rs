@@ -18,7 +18,7 @@ pub struct Cli {
     pub list: bool,
 
     /// Sort by file size, largest first
-    #[arg(short = 'S', long, overrides_with = "sort-by-time")]
+    #[arg(short = 'S', long, overrides_with = "sort_by_time")]
     pub sort_by_size: bool,
 
     /// Sort by time, newest first
