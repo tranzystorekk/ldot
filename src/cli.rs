@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use clap::{CommandFactory, Parser};
+use clap::{ArgAction, CommandFactory, Parser};
 use clap_complete::Shell;
 
 const PKG_NAME: &str = env!("CARGO_PKG_NAME");
@@ -11,7 +11,7 @@ pub fn generate_completion(shell: Shell) {
 
 /// List hidden files and directories AKA "dotfiles"
 #[derive(Parser)]
-#[command(version)]
+#[command(version, disable_help_flag = true)]
 pub struct Cli {
     /// Use a long listing format
     #[arg(short, long)]
@@ -30,7 +30,7 @@ pub struct Cli {
     pub reverse: bool,
 
     /// With -l, print human-readable file sizes, e.g. 10M
-    #[arg(short = 'H', long)]
+    #[arg(short, long)]
     pub human_readable: bool,
 
     /// Specify when to colorize the output
@@ -44,4 +44,8 @@ pub struct Cli {
     /// List contents inside the specified directory
     #[arg(value_name = "ROOT_DIR")]
     pub from_dir: Option<PathBuf>,
+
+    /// Print help information
+    #[arg(long, action = ArgAction::Help)]
+    help: (),
 }
